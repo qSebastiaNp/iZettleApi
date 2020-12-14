@@ -9,5 +9,5 @@ interface VariantChangeHistoryBuilderInterface
     /**
      * @return VariantChangeHistory[]
      */
-    public function buildFromJson(string $json): History;
+    public function buildFromJson(string $json): VariantChangeHistory;
 }
