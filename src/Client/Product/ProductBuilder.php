@@ -7,6 +7,7 @@ namespace LauLamanApps\IzettleApi\Client\Product;
 use DateTime;
 use LauLamanApps\IzettleApi\API\Product\Product;
 use LauLamanApps\IzettleApi\API\Product\ProductCollection;
+use LauLamanApps\IzettleApi\API\Universal\Vat;
 use LauLamanApps\IzettleApi\Client\Universal\ImageBuilderInterface;
 use Ramsey\Uuid\Uuid;
 
@@ -32,11 +33,16 @@ final class ProductBuilder implements ProductBuilderInterface
     public function buildFromJson(string $json): array
     {
         $products = [];
-        foreach (json_decode($json, true) as $purchase) {
-            $products[] = $this->build($purchase);
+        foreach (json_decode($json, true) as $productData) {
+            $products[] = $this->build($productData);
         }
 
         return $products;
+    }
+
+    public function buildSingleFromJson(string $json): Product
+    {
+        return $this->build(json_decode($json, true));
     }
 
     public function buildFromArray(array $data): ProductCollection
@@ -64,7 +70,7 @@ final class ProductBuilder implements ProductBuilderInterface
             new DateTime($data['updated']),
             Uuid::fromString($data['updatedBy']),
             new DateTime($data['created']),
-            (float) $data['vatPercentage']
+            $data['vatPercentage'] != '0' ? new Vat($data['vatPercentage']) : null
         );
     }
 }
