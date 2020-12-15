@@ -17,7 +17,7 @@ final class LocationBalanceBuilder implements LocationBalanceBuilderInterface
             TypeEnum::get($data['locationType']),
             Uuid::fromString($data['productUuid']),
             Uuid::fromString($data['variantUuid']),
-            $data['balance']
+            (int) $data['balance']
         );
     }
 }
