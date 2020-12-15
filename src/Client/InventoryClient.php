@@ -101,10 +101,10 @@ final class InventoryClient
 
         return $this->locationInventoryBuilder->buildFromJsonArray($json);
     }
-
+    
     public function getLocationInventory(UuidInterface $locationUuid): LocationInventory
     {
-        $url = sprintf(self::GET_LOCATION, $this->organizationUuid, $locationUuid->toString());
+        $url = sprintf(self::GET_INVENTORY_LOCATION, $this->organizationUuid, $locationUuid->toString());
         $json = $this->client->getJson($this->client->get($url, null));
 
         return $this->locationInventoryBuilder->buildFromJson($json);
